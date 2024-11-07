@@ -1,7 +1,18 @@
 <?php
+// Start the session to access session variables
+session_start();
+
+// Include header and database connection
 include_once 'inc/header.php';
 require_once 'inc/database.php';
 
+// Redirect to login page if user is not logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit; // Ensure no further code is executed
+}
+
+// Handle form submission
 if (!empty($_POST)) {
 
   $valmistaja = $_POST['valmistaja'] ?? '';
@@ -13,7 +24,7 @@ if (!empty($_POST)) {
   $xmax = $_POST['xmax'];
   $spl = $_POST['spl'];
 
-  // tarkistetaan tietojen oikeeellisuus
+  // Validate the input
   $valid = true;
 
   if (empty($valmistaja)) {
@@ -58,6 +69,7 @@ if (!empty($_POST)) {
   
   if ($valid) {
 
+    // Insert data into the database
     $sql = "INSERT INTO elementit (valmistaja,malli,koko,rms,peak,fs,xmax,spl) VALUES (:valmistaja,:malli,:koko,:rms,:peak,:fs,:xmax,:spl);";
 
     $stmt = $pdo->prepare($sql);
@@ -77,7 +89,7 @@ if (!empty($_POST)) {
   }
 } else {
 
-  //yleiset ohjetekstit
+  // Default error messages
   $valmistajaError = 'Syötä valmistaja';
   $malliError = 'Syötä malli';
   $kokoError = 'Syötä koko';
@@ -98,6 +110,7 @@ if (!empty($_POST)) {
       <form method="post" enctype="multipart/form-data"
       class="needs-validation" novalidate>
 
+        <!-- Form Fields -->
         <div class="mb-3">
           <label for ="valmistaja" class="form-label">valmistaja</label>
           <input type = "text" 
@@ -210,7 +223,7 @@ if (!empty($_POST)) {
           </div>
         </div>
 
-                                
+                                  
         <div class="mb-3">
           <label for ="spl" class="form-label">spl</label>
           <input type = "text" 
@@ -235,3 +248,4 @@ if (!empty($_POST)) {
 </div>
 <?php
 include_once 'inc/footer.php';
+?>
