@@ -1,0 +1,30 @@
+body, html {
+    height: 100%;
+    overflow: hidden;
+    background: rgb(52, 52, 52);
+    
+}
+
+#carouselExampleCaptions{
+    width: auto;
+}
+
+.container {
+    height: auto;
+}
+
+.carousel {
+    height: 100%;
+    width: 100%;
+}
+.carousel-inner {
+    height: 100%;
+}
+.carousel-item {
+    height: 100%;
+}
+.carousel-item img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
